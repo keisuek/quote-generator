@@ -1,14 +1,42 @@
+const quoteContainer = document.getElementById("quote-container");
+const quoteText = document.getElementById("quote");
+const authorText = document.getElementById("author");
+const twitterBtn = document.getElementById("twitter");
+const newQuoteBtn = document.getElementById("new-quote");
+
+console.log(authorText);
+
 async function getQuote() {
-	// const proxyUrl = "http://127.0.0.1:5500";
+	const proxyUrl = "https://boiling-inlet-13693.herokuapp.com/";
 	const apiUrl =
 		"http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json";
 	try {
-		const response = await fetch(apiUrl);
+		const response = await fetch(proxyUrl + apiUrl);
 		const data = await response.json();
-		console.log(data);
-	} catch (e) {
-		console.log("whoops, no-quote", e);
+		console.log(data.quoteText);
+		if (data.quoteAuthor === "") {
+			authorText.innerText = "Unknown";
+		} else {
+			authorText.innerText = data.quoteAuthor;
+		}
+
+		if (data.quoteText.length > 120) {
+			quoteText.classList.add("long-quote");
+		} else {
+			quoteText.classList.remove("long-quote");
+		}
+		quoteText.innerText = data.quoteText;
+	} catch (error) {
+		getQuote();
 	}
 }
 
-getQuote();
+function tweetQuote() {
+	const quote = quoteText.innerText;
+	const author = authorText.innerText;
+	const twitterUrl = `https://twitter.com/intent/tweet?text=${quote}-${author}`;
+	window.open(twitterUrl, "_blank");
+}
+
+newQuoteBtn.addEventListener("click", getQuote);
+twitterBtn.addEventListener("click", tweetQuote);
