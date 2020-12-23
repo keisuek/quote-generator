@@ -32,7 +32,7 @@ body {
 }
 
 .long-quote {
-	font-size: 2rem;
+	font-size: 1.7rem;
 }
 
 .fas-quote-left {
@@ -42,7 +42,7 @@ body {
 .quote-author {
 	font-size: 1.8rem;
 	font-style: italic;
-	padding: 10px 0;
+	padding: 1rem 0;
 }
 
 .button-container {
@@ -76,13 +76,34 @@ button:active {
 	font-size: 1.5rem;
 }
 
-/* .twitter-button {
-	color: #1da1f2;
-	font-size: 1.8rem;
-	transition-property: opacity;
-	transition: 0.3s ease-out;
-	-moz-transition: 0.3s ease-out;
-} */
+.loader {
+	border: 8px solid #f3f3f3;
+	border-radius: 50%;
+	border-top: 8px solid #333;
+	width: 75px;
+	height: 75px;
+	-webkit-animation: spin 1.8s linear infinite; /* Safari */
+	animation: spin 1.8s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
 
 @media screen and (max-width: 768px) {
 	.quote-container {

@@ -3,10 +3,24 @@ const quoteText = document.getElementById("quote");
 const authorText = document.getElementById("author");
 const twitterBtn = document.getElementById("twitter");
 const newQuoteBtn = document.getElementById("new-quote");
+const loader = document.getElementById("loader");
 
-console.log(authorText);
+loader.hidden = true;
+
+function showLoadingSpinner() {
+	loader.hidden = false;
+	quoteContainer.hidden = true;
+}
+
+function removeLoadingSpinner() {
+	if (!loader.hidden) {
+		quoteContainer.hidden = false;
+		loader.hidden = true;
+	}
+}
 
 async function getQuote() {
+	showLoadingSpinner();
 	const proxyUrl = "https://boiling-inlet-13693.herokuapp.com/";
 	const apiUrl =
 		"http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json";
@@ -25,7 +39,9 @@ async function getQuote() {
 		} else {
 			quoteText.classList.remove("long-quote");
 		}
+
 		quoteText.innerText = data.quoteText;
+		removeLoadingSpinner();
 	} catch (error) {
 		getQuote();
 	}
